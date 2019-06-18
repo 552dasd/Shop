@@ -54,7 +54,7 @@ dependencies {
     //自动将服务器返回的json数据转换成实体类；我们传给retrofit的实体类，自动转换成json
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
-gson实体解析库2
+    //gson实体解析库2
     implementation 'com.google.code.gson:gson:2.6.2'
 
     //RxJava 依赖包

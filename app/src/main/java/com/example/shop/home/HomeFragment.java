@@ -3,9 +3,8 @@ package com.example.shop.home;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,12 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.apiserver.ProductApiService;
+import com.example.shop.com.example.zds.News;
+import com.example.shop.com.example.zds.Pager;
 import com.example.shop.enrty.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import retrofit2.Call;
@@ -28,12 +32,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends SupportFragment {
-    View view;
 
+    ArrayList<News> news;
+    ViewPager viewPager;
 
     public HomeFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * 查询所有商品
@@ -46,11 +52,11 @@ public class HomeFragment extends SupportFragment {
 
         ProductApiService productApiService = retrofit.create(ProductApiService.class);
 
-        Call<Item> itemCall = productApiService.queryAllProduct();
+        Call<com.example.shop.enrty.Item> itemCall = productApiService.queryAllProduct();
 
-        itemCall.enqueue(new Callback<Item>() {
+        itemCall.enqueue(new Callback<com.example.shop.enrty.Item>() {
             @Override
-            public void onResponse(Call<Item> call, Response<Item> response) {
+            public void onResponse(Call<com.example.shop.enrty.Item> call, Response<com.example.shop.enrty.Item> response) {
                 Toast.makeText(getContext(),"成功",Toast.LENGTH_SHORT).show();
             }
 
@@ -62,17 +68,37 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);;
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        viewPager = view.findViewById(R.id.vp);
+        initData();
+        viewPager.setAdapter(new Pager(getContext(),news));
+        viewPager.setCurrentItem(Integer.MAX_VALUE / 2- (Integer.MAX_VALUE / 2) % news.size());
+        autoPlay();
         return view;
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void initData(){
+        news = new ArrayList<>();
+        news.add(new News(R.drawable.a));
+        news.add(new News(R.drawable.b));
+        news.add(new News(R.drawable.c));
     }
+
+    public void autoPlay(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+
 }
