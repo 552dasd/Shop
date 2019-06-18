@@ -1,4 +1,4 @@
-package com.example.shop.com.example.zds;
+package com.example.shop.adapter;
 
 
 import android.content.Context;
@@ -10,16 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.shop.R;
+import com.example.shop.enrty.News;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class Pager extends PagerAdapter {
+public class MyPagerAdapter extends PagerAdapter {
 
     ArrayList<News> news;
     Context context;
-    public Pager( Context context,ArrayList<News> news){
+    public MyPagerAdapter(Context context, ArrayList<News> news){
         this.news = news;
         this.context = context;
     }

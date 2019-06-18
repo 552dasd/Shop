@@ -1,4 +1,4 @@
-package com.example.shop.carFragmentAdapter;
+package com.example.shop.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
 
-import com.example.shop.Item;
 import com.example.shop.R;
+import com.example.shop.enrty.Item;
 
-public class AdapterCarListAdapter extends BaseAdapter {
+public class CarListAdapter extends BaseAdapter {
 
     private List<Item.BodeBean> objects = new ArrayList<Item.BodeBean>();
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public AdapterCarListAdapter(Context context,List<Item.BodeBean> objects) {
+    public CarListAdapter(Context context, List<Item.BodeBean> objects) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.objects = objects;

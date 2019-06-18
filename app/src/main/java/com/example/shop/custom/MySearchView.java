@@ -1,4 +1,4 @@
-package com.example.shop.com.example.zds;
+package com.example.shop.custom;
 
 import android.content.Context;
 import android.os.Build;

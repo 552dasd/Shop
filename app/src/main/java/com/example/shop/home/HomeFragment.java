@@ -13,12 +13,11 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.apiserver.ProductApiService;
-import com.example.shop.com.example.zds.News;
-import com.example.shop.com.example.zds.Pager;
+import com.example.shop.enrty.News;
+import com.example.shop.adapter.MyPagerAdapter;
 import com.example.shop.enrty.Item;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import retrofit2.Call;
@@ -75,7 +74,7 @@ public class HomeFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         viewPager = view.findViewById(R.id.vp);
         initData();
-        viewPager.setAdapter(new Pager(getContext(),news));
+        viewPager.setAdapter(new MyPagerAdapter(getContext(),news));
         viewPager.setCurrentItem(Integer.MAX_VALUE / 2- (Integer.MAX_VALUE / 2) % news.size());
         autoPlay();
         return view;

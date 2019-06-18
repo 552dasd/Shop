@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.shop.carFragmentAdapter.AdapterCarListAdapter;
-
 import com.example.shop.R;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -35,7 +33,7 @@ public class CarFragment extends SupportFragment {
         view = inflater.inflate(R.layout.fragment_car, container, false);
 
         listView = view.findViewById(R.id.pro_information_list);
-       // AdapterCarListAdapter adapterCarListAdapter = new AdapterCarListAdapter(getActivity(),);
+       // CarListAdapter adapterCarListAdapter = new CarListAdapter(getActivity(),);
        // listView.setAdapter(adapterCarListAdapter);
         return view;
     }

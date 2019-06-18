@@ -1,4 +1,4 @@
-package com.example.shop.com.example.zds;
+package com.example.shop.enrty;
 
 public class News {
     int id;
