@@ -31,10 +31,10 @@ public class MainActivity extends SupportActivity {
                     showHideFragment(homeFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    showHideFragment(carFragment);
+                    showHideFragment(messageFragment);
                     return true;
                 case R.id.navigation_message:
-                    showHideFragment(messageFragment);
+                    showHideFragment(carFragment);
                     return true;
                 case R.id.navigation_notifications:
                     showHideFragment(meFragment);

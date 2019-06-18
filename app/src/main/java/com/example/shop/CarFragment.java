@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.example.shop.carFragmentAdapter.AdapterCarListAdapter;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -16,8 +19,8 @@ import me.yokeyword.fragmentation.SupportFragment;
  * A simple {@link Fragment} subclass.
  */
 public class CarFragment extends SupportFragment {
-
-
+    View view;
+    ListView listView;
     public CarFragment() {
         // Required empty public constructor
     }
@@ -27,7 +30,12 @@ public class CarFragment extends SupportFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_car, container, false);
+        view = inflater.inflate(R.layout.fragment_car, container, false);
+
+        listView = view.findViewById(R.id.pro_information_list);
+       // AdapterCarListAdapter adapterCarListAdapter = new AdapterCarListAdapter(getActivity(),);
+       // listView.setAdapter(adapterCarListAdapter);
+        return view;
     }
 
 }
