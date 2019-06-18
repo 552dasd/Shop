@@ -2,6 +2,10 @@ package com.example.shop;
 
 import android.os.Bundle;
 
+import com.example.shop.home.CarFragment;
+import com.example.shop.home.HomeFragment;
+import com.example.shop.home.MeFragment;
+import com.example.shop.home.MessageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
