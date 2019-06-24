@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
     private RecyclerView recyclerView ;
     private List<Item.BodeBean> objects = new ArrayList<Item.BodeBean>();
     private View view;
+    private View adapterView;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
 
     private TextView tv_null;
@@ -41,6 +44,7 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
     private TextView tv_settlement;
     private CheckBox cb_all;
     private ImageView iv_car_null;
+
     public CarFragment() {
         // Required empty public constructor
     }
@@ -53,11 +57,11 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
         initData();
         add();
         show();
+        initListener();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()); //指定布局样式(显示规则)
         recyclerView.setLayoutManager(linearLayoutManager);
         myRecyclerViewAdapter = new MyRecyclerViewAdapter(objects,view);//实例适配器,传入输入
         recyclerView.setAdapter(myRecyclerViewAdapter); //设置适配器
-        initListener();
         return view;
     }
 
@@ -106,12 +110,12 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-        for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).setCheck(b);
+        List<Item.BodeBean> list = myRecyclerViewAdapter.getObjects();
+        for (int i=0;i<list.size();i++) {
+            list.get(i).setCheck(b);
         }
-        myRecyclerViewAdapter.setObjects(objects);
+        myRecyclerViewAdapter.setObjects(list);
         myRecyclerViewAdapter.notifyDataSetChanged();
-        myRecyclerViewAdapter.sum(tv_show_price,tv_settlement);
+        myRecyclerViewAdapter.sum(tv_show_price,tv_settlement,(EditText) view.findViewById(R.id.et_count));
     }
 }

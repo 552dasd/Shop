@@ -68,14 +68,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Item.BodeBean item = objects.get(position);
-        holder.tvPrice.setText("123123123");
-        holder.tvName.setText("11111111111111111");
+        holder.tvPrice.setText(item.getPrice()+"123123123");
+        holder.tvName.setText(item.getTitle()+"11111111111111111");
+        holder.editText.setText(2+"");
         //单选商品
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 item.setCheck(b);
-                sum((TextView) view.findViewById(R.id.tv_show_price),(TextView) view.findViewById(R.id.tv_settlement));
+                sum((TextView) view.findViewById(R.id.tv_show_price),(TextView) view.findViewById(R.id.tv_settlement),(EditText)view.findViewById(R.id.et_count));
             }
         });
     }
@@ -85,16 +86,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return objects.size();
     }
 
-    public void sum(TextView tv_show_price, TextView tv_settlement){
+    public void sum(TextView tv_show_price, TextView tv_settlement,EditText et){
+
         totalPrice = 0.00;
         totalCount = 0;
         int sum = 0;
         List<Item.BodeBean> list = getObjects();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck()) {
-                sum = 2;
+                sum = Integer.parseInt(et.getText().toString());
                 totalCount = totalCount + sum;
-                totalPrice += 1;
+                totalPrice = list.get(i).getPrice() * totalCount;
             }
         }
         tv_show_price.setText("合计:" + totalPrice);
