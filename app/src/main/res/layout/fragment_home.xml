@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E7E7E7"
+    android:background="#DADADA"
     tools:context=".home.HomeFragment">
 
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
@@ -30,58 +29,177 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="618狂欢省钱攻略"
-                android:textColor="#000"
-                android:textSize="20dp" />
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_bar"
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/radius"
-                tools:ignore="MissingConstraints"></androidx.appcompat.widget.SearchView>
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="618狂欢省钱攻略"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/radius"
+                    tools:ignore="MissingConstraints"></TextView>
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
 
             <com.youth.banner.Banner
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <com.example.shop.enrty.NoScroller
+                    android:id="@+id/gv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="5"
+                    android:layout_marginTop="2dp"></com.example.shop.enrty.NoScroller>
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="秒杀"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/radius"
-                    android:gravity="center"
-                    android:text="text" />
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="今日商城"
+                    android:textColor="#FF5318"
+                    android:textSize="15dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#575757"/>
+                <com.sunfusheng.marqueeview.MarqueeView
+                    android:id="@+id/marqueeView"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp"
+                    app:mvAnimDuration="1000"
+                    app:mvDirection="bottom_to_top"
+                    app:mvInterval="3000"
+                    app:mvTextColor="#000"
+                    app:mvTextSize="14sp"
+                    app:mvSingleLine="true" />
             </LinearLayout>
-
-            <com.example.shop.enrty.NoScroller
-                android:id="@+id/gv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"
-                android:numColumns="2"></com.example.shop.enrty.NoScroller>
+                android:layout_height="300dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/a"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="111"
+                        android:textColor="#000" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="222"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp" />
+
+                </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="5dp">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="200dp"
+                            android:layout_height="150dp"
+                            android:src="@color/colorAccent"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="111"
+                            android:textColor="#000" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="222"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp" />
+
+                    </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="150dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginEnd="0dp"
+                                android:layout_marginRight="0dp"
+                                android:src="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="5dp"
+                                android:text="111"
+                                android:textColor="#000"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="222"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+
+                                />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
     </com.liaoinstan.springview.widget.SpringView>
-
-
-
 
 </RelativeLayout>

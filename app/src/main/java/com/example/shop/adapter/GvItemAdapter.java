@@ -12,15 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shop.R;
+import com.example.shop.enrty.GvItem;
+import com.youth.banner.loader.ImageLoader;
 
 public class GvItemAdapter extends BaseAdapter{
 
-    private List<Object> objects = new ArrayList<Object>();
+    private List<GvItem> objects ;
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public GvItemAdapter(Context context,List<Object> objects) {
+    public GvItemAdapter(Context context,List<GvItem> objects) {
         this.objects = objects;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -32,7 +34,7 @@ public class GvItemAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
+    public GvItem getItem(int position) {
         return objects.get(position);
     }
 
@@ -47,25 +49,24 @@ public class GvItemAdapter extends BaseAdapter{
             convertView = layoutInflater.inflate(R.layout.gv_item, null);
             convertView.setTag(new ViewHolder(convertView));
         }
-        initializeViews((Object)getItem(position), (ViewHolder) convertView.getTag());
+        initializeViews((GvItem)getItem(position), (ViewHolder) convertView.getTag());
         return convertView;
     }
 
-    private void initializeViews(Object object, ViewHolder holder) {
-        //TODO implement
-        holder.gvPrice.setText("1111");
-        holder.gvName.setText("11121");
+    private void initializeViews(GvItem object, ViewHolder holder) {
+        holder.gvName.setText(object.getName());
+        holder.gvImg.setImageResource(object.getImageView());
     }
 
     protected class ViewHolder {
         private ImageView gvImg;
     private TextView gvName;
-    private TextView gvPrice;
+
 
         public ViewHolder(View view) {
             gvImg = (ImageView) view.findViewById(R.id.gv_img);
             gvName = (TextView) view.findViewById(R.id.gv_name);
-            gvPrice = (TextView) view.findViewById(R.id.gv_price);
+
         }
     }
 }
