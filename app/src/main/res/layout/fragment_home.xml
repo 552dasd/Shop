@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,29 +8,80 @@
     android:background="#E7E7E7"
     tools:context=".home.HomeFragment">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/bar" />
-
-    <FrameLayout
+    <com.liaoinstan.springview.widget.SpringView
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/include"
+
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp"
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/refresh"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="618狂欢省钱攻略"
+                android:textColor="#000"
+                android:textSize="20dp" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radius"
+                tools:ignore="MissingConstraints"></androidx.appcompat.widget.SearchView>
 
-        </androidx.viewpager.widget.ViewPager>
-    </FrameLayout>
+            <com.youth.banner.Banner
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="秒杀"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/radius"
+                    android:gravity="center"
+                    android:text="text" />
+            </LinearLayout>
+
+            <com.example.shop.enrty.NoScroller
+                android:id="@+id/gv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:numColumns="2"></com.example.shop.enrty.NoScroller>
+        </LinearLayout>
+    </ScrollView>
+    </com.liaoinstan.springview.widget.SpringView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
