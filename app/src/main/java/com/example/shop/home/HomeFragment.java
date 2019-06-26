@@ -17,12 +17,14 @@ import com.example.shop.R;
 import com.example.shop.adapter.GvItemAdapter;
 import com.example.shop.adapter.MyPagerAdapter;
 import com.example.shop.apiserver.ProductApiService;
+import com.example.shop.enrty.GvItem;
 import com.example.shop.enrty.Item;
 import com.example.shop.enrty.News;
 import com.example.shop.enrty.NoScroller;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+import com.sunfusheng.marqueeview.MarqueeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -43,12 +45,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HomeFragment extends SupportFragment {
 
-    ArrayList<News> news;
     SpringView refreshableView;
     NoScroller gv;
     ScrollView scrollView;
     MyImageLoader mMyImageLoader;
     Banner mBanner;
+    List<GvItem> objects = new ArrayList<>();
+    MarqueeView marqueeView;
 
     private ArrayList<Integer> imagePath;
     private ArrayList<String> imageTitle;
@@ -92,14 +95,17 @@ public class HomeFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         refreshableView = view.findViewById(R.id.refresh);
         mBanner = view.findViewById(R.id.banner);
+        marqueeView = view.findViewById(R.id.marqueeView);
         refreshableView.setType(SpringView.Type.FOLLOW);
         refreshableView.setHeader(new DefaultHeader(getContext()));
         refreshableView.setFooter(new DefaultFooter(getContext()));
         gv = view.findViewById(R.id.gv);
         scrollView = view.findViewById(R.id.scroll);
-        initData();
+        gv.setAdapter(new GvItemAdapter(getContext(),objects));
 
+        initData();
         initView();
+
 
         refreshableView.setListener(new SpringView.OnFreshListener() {
             @Override
@@ -126,13 +132,6 @@ public class HomeFragment extends SupportFragment {
     }
 
     public void initData() {
-        news = new ArrayList<>();
-        news.add(new News(R.drawable.a));
-        news.add(new News(R.drawable.b));
-        news.add(new News(R.drawable.c));
-
-
-
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();
         imagePath.add(R.drawable.a);
@@ -141,6 +140,24 @@ public class HomeFragment extends SupportFragment {
         imageTitle.add("秒杀");
         imageTitle.add("抢购");
         imageTitle.add("鲜果计划");
+
+        objects.add(new GvItem(R.drawable.news,"新品发布"));
+        objects.add(new GvItem(R.drawable.mutli,"众筹"));
+        objects.add(new GvItem(R.drawable.more,"超多惊喜"));
+        objects.add(new GvItem(R.drawable.spell,"平团"));
+        objects.add(new GvItem(R.drawable.sell,"超值特卖"));
+        objects.add(new GvItem(R.drawable.time,"秒杀"));
+        objects.add(new GvItem(R.drawable.change,"以旧换新"));
+        objects.add(new GvItem(R.drawable.hot_sell,"电视热卖"));
+        objects.add(new GvItem(R.drawable.electric,"家电热卖"));
+        objects.add(new GvItem(R.drawable.card,"优惠卡"));
+
+        List<String> messages = new ArrayList<>();
+        messages.add(" 大家好");
+        messages.add(" 欢迎大家！");
+        messages.add(" 积分兑换");
+        marqueeView.startWithList(messages);
+        marqueeView.startWithList(messages, R.anim.anim_bottom_in, R.anim.anim_top_out);
     }
 
     private void initView() {
@@ -164,7 +181,17 @@ public class HomeFragment extends SupportFragment {
                 //轮播图的监听
                 //开始调用的方法，启动轮播图。
                 .start();
-
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        marqueeView.startFlipping();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        marqueeView.stopFlipping();
+    }
 }
