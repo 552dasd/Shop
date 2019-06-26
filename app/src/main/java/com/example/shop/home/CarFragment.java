@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -39,6 +40,7 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
     private View adapterView;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
 
+    private TextView bt_header_right;
     private TextView tv_null;
     private TextView tv_show_price;
     private TextView tv_settlement;
@@ -72,6 +74,7 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
         cb_all  = view.findViewById(R.id.cb_all);
         tv_show_price = view.findViewById(R.id.tv_show_price);
         tv_settlement = view.findViewById(R.id.tv_settlement);
+        bt_header_right = view.findViewById(R.id.bt_header_right);
     }
 
     public void show(){
@@ -110,12 +113,30 @@ public class CarFragment extends SupportFragment implements CompoundButton.OnChe
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        List<Item.BodeBean> list = myRecyclerViewAdapter.getObjects();
-        for (int i=0;i<list.size();i++) {
-            list.get(i).setCheck(b);
+
+        for (int i=0;i<objects.size();i++) {
+            objects.get(i).setCheck(b);
         }
-        myRecyclerViewAdapter.setObjects(list);
         myRecyclerViewAdapter.notifyDataSetChanged();
-        myRecyclerViewAdapter.sum(tv_show_price,tv_settlement,(EditText) view.findViewById(R.id.et_count));
+        myRecyclerViewAdapter.sum(tv_show_price,tv_settlement);
     }
+
+
+   /* public boolean onTouchEvent(MotionEvent event) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN: //按下
+
+                break;
+            case MotionEvent.ACTION_MOVE: //滑动
+
+                break;
+            case MotionEvent.ACTION_UP: //弹起
+
+                break;
+        }
+        return true;
+    }*/
 }
