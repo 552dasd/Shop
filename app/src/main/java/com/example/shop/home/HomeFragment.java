@@ -6,21 +6,24 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.MyImageLoader;
 import com.example.shop.R;
 import com.example.shop.adapter.GvItemAdapter;
-import com.example.shop.adapter.MyPagerAdapter;
-import com.example.shop.apiserver.ProductApiService;
+import com.example.shop.adapter.GvProductAdapter;
+import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.enrty.GvItem;
-import com.example.shop.enrty.Item;
-import com.example.shop.enrty.News;
+import com.example.shop.enrty.GvProduct;
 import com.example.shop.enrty.NoScroller;
+import com.example.shop.enrty.ProductItem;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -33,11 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.yokeyword.fragmentation.SupportFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -51,7 +49,12 @@ public class HomeFragment extends SupportFragment {
     MyImageLoader mMyImageLoader;
     Banner mBanner;
     List<GvItem> objects = new ArrayList<>();
+    List<ProductItem> productItems = new ArrayList<>();
+    List<GvProduct> gvProducts = new ArrayList<>();
     MarqueeView marqueeView;
+    RecyclerView recyclerView;
+    GridView gvProduct;
+
 
     private ArrayList<Integer> imagePath;
     private ArrayList<String> imageTitle;
@@ -96,15 +99,28 @@ public class HomeFragment extends SupportFragment {
         refreshableView = view.findViewById(R.id.refresh);
         mBanner = view.findViewById(R.id.banner);
         marqueeView = view.findViewById(R.id.marqueeView);
+        recyclerView =view.findViewById(R.id.recycler_view);
+        scrollView = view.findViewById(R.id.scroll);
+        gv = view.findViewById(R.id.gv);
+        gvProduct = view.findViewById(R.id.gv_product);
+
         refreshableView.setType(SpringView.Type.FOLLOW);
         refreshableView.setHeader(new DefaultHeader(getContext()));
         refreshableView.setFooter(new DefaultFooter(getContext()));
-        gv = view.findViewById(R.id.gv);
-        scrollView = view.findViewById(R.id.scroll);
-        gv.setAdapter(new GvItemAdapter(getContext(),objects));
+
 
         initData();
         initView();
+
+        gv.setAdapter(new GvItemAdapter(getContext(),objects));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        ((LinearLayoutManager) layoutManager).setOrientation(LinearLayout.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new ProductAdapter(getContext(),productItems));
+        gvProduct.setAdapter(new GvProductAdapter(getContext(),gvProducts));
+
+
+
 
 
         refreshableView.setListener(new SpringView.OnFreshListener() {
@@ -132,6 +148,7 @@ public class HomeFragment extends SupportFragment {
     }
 
     public void initData() {
+        //轮播
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();
         imagePath.add(R.drawable.a);
@@ -152,12 +169,33 @@ public class HomeFragment extends SupportFragment {
         objects.add(new GvItem(R.drawable.electric,"家电热卖"));
         objects.add(new GvItem(R.drawable.card,"优惠卡"));
 
+        //跑马灯
         List<String> messages = new ArrayList<>();
         messages.add(" 大家好");
         messages.add(" 欢迎大家！");
         messages.add(" 积分兑换");
         marqueeView.startWithList(messages);
         marqueeView.startWithList(messages, R.anim.anim_bottom_in, R.anim.anim_top_out);
+
+        //秒杀
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+        productItems.add(new ProductItem(R.drawable.a,123,789));
+
+        //商品
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
+        gvProducts.add(new GvProduct(R.drawable.a,"ddd","dddd",123,123));
     }
 
     private void initView() {
