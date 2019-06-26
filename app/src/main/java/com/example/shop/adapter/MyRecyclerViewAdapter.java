@@ -16,13 +16,13 @@ import com.example.shop.R;
 import com.example.shop.enrty.Item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<Item.BodeBean> objects = new ArrayList<Item.BodeBean>();
-    private double totalPrice = 0.00;// 购买的商品总价
-    private int totalCount = 1;// 购买的商品总数量
     private View view;
 
     public List<Item.BodeBean> getObjects() {
@@ -36,19 +36,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvName;
         TextView tvPrice;
-        CheckBox checkBox;
-        EditText editText;
+        CheckBox cbSingle;
+        EditText etCount;
+        View carView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            carView = itemView;
             initData();
         }
 
         public void initData(){
             tvName = (TextView)itemView.findViewById(R.id.tv_name);
             tvPrice = itemView.findViewById(R.id.tv_price);
-            checkBox = itemView.findViewById(R.id.cb_single);
-            editText = itemView.findViewById(R.id.et_count);
+            cbSingle = itemView.findViewById(R.id.cb_single);
+            etCount = itemView.findViewById(R.id.et_count);
         }
     }
 
@@ -66,19 +68,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Item.BodeBean item = objects.get(position);
         holder.tvPrice.setText(item.getPrice()+"123123123");
         holder.tvName.setText(item.getTitle()+"11111111111111111");
-        holder.editText.setText(2+"");
-        //单选商品
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.cbSingle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                item.setCheck(b);
-                sum((TextView) view.findViewById(R.id.tv_show_price),(TextView) view.findViewById(R.id.tv_settlement),(EditText)view.findViewById(R.id.et_count));
-            }
-        });
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                item.setCheck(isChecked);
+                sum((TextView) view.findViewById(R.id.tv_show_price), (TextView) view.findViewById(R.id.tv_settlement));
+            }});
+        holder.cbSingle.setChecked(item.isCheck());
+
     }
 
     @Override
@@ -86,17 +87,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return objects.size();
     }
 
-    public void sum(TextView tv_show_price, TextView tv_settlement,EditText et){
-
-        totalPrice = 0.00;
-        totalCount = 0;
+    /**
+     * 结算
+     *
+     * @param tv_show_price 显示合计的View
+     * @param tv_settlement 显示结算个数的View
+     */
+    public void sum(TextView tv_show_price, TextView tv_settlement) {
+        double totalPrice = 0.00;
+         int totalCount = 0;
         int sum = 0;
         List<Item.BodeBean> list = getObjects();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck()) {
-                sum = Integer.parseInt(et.getText().toString());
+                sum = 2;
                 totalCount = totalCount + sum;
-                totalPrice = list.get(i).getPrice() * totalCount;
+                totalPrice += 1;
             }
         }
         tv_show_price.setText("合计:" + totalPrice);

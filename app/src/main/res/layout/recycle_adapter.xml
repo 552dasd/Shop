@@ -59,8 +59,8 @@
         <ImageView
             android:id="@+id/reduce"
             android:background="#F70909"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
         <EditText
             android:id="@+id/et_count"
@@ -78,8 +78,8 @@
         <ImageView
             android:id="@+id/puls"
             android:background="#2196F3"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
     </LinearLayout>
 
 </LinearLayout>

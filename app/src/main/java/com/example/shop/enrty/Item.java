@@ -49,16 +49,11 @@ public class Item {
         private int status;
         private long created;
         private long updated;
-
-        public boolean isCheck() {
-            return isCheck;
-        }
-
-        public void setCheck(boolean check) {
-            isCheck = check;
-        }
-
         private boolean isCheck = false;
+
+        public boolean isCheck() { return isCheck; }
+
+        public void setCheck(boolean check) { isCheck = check; }
 
         public int getId() {
             return id;
