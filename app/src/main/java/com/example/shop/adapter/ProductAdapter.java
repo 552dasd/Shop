@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shop.MyApplication;
 import com.example.shop.R;
 import com.example.shop.enrty.ProductItem;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -37,10 +39,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         ProductItem productItem = objects.get(position);
-        holder.img.setImageResource(productItem.getImgProduct());
-        holder.newPrice.setText("$"+productItem.getNewPrice()+"");
+        ImageLoader.getInstance().displayImage(productItem.getImgProduct(),holder.img, MyApplication.getLoaderOptions());
+        holder.newPrice.setText("¥"+productItem.getNewPrice()+"");
         holder.oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
-        holder.oldPrice.setText("$"+productItem.getOldPrice()+"");
+        holder.oldPrice.setText("¥"+productItem.getOldPrice()+"");
     }
 
     @Override

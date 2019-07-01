@@ -1,20 +1,21 @@
 package com.example.shop.enrty;
 
 public class ProductItem {
-    int imgProduct;
+    String imgProduct;
     int newPrice;
+    int oldPrice;
 
-    public int getImgProduct() {
+    public String getImgProduct() {
         return imgProduct;
     }
 
-    public void setImgProduct(int imgProduct) {
+    public void setImgProduct(String imgProduct) {
         this.imgProduct = imgProduct;
     }
 
-    int oldPrice;
 
-    public ProductItem(int imgProduct, int newPrice, int oldPrice) {
+
+    public ProductItem(String imgProduct, int newPrice, int oldPrice) {
         this.imgProduct = imgProduct;
         this.newPrice = newPrice;
         this.oldPrice = oldPrice;

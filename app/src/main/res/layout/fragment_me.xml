@@ -5,6 +5,7 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#D3D3D3"
     android:orientation="vertical"
     tools:context=".home.MeFragment">
 
@@ -57,7 +58,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
+        android:background="#fff"
+        android:paddingLeft="10dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -87,18 +89,33 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#B8B8B8"/>
-    <GridView
+    <com.example.shop.enrty.NoScroller
         android:id="@+id/me_gv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
         android:numColumns="4"
+        android:background="#fff"
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="5dp">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:background="#fff">
+        <com.example.shop.enrty.NoScroller
+            android:id="@+id/me_gv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:numColumns="4" />
     </LinearLayout>
+    <com.example.shop.enrty.MyRecycelView
+        android:id="@+id/my_recycel_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.example.shop.enrty.MyRecycelView>
 </LinearLayout>
 
 

@@ -1,5 +1,6 @@
 package com.example.shop.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -10,19 +11,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.shop.MyApplication;
 import com.example.shop.R;
+import com.example.shop.enrty.Commodity;
 import com.example.shop.enrty.GvItem;
 import com.example.shop.enrty.GvProduct;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 public class GvProductAdapter extends BaseAdapter {
-    private List<GvProduct> objects ;
+    private List<Commodity.CommodityBean> objects ;
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public GvProductAdapter(Context context, List<GvProduct> objects) {
+    public GvProductAdapter(Context context, List<Commodity.CommodityBean> objects) {
         this.objects = objects;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -34,7 +38,7 @@ public class GvProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public GvProduct getItem(int position) {
+    public Commodity.CommodityBean getItem(int position) {
         return objects.get(position);
     }
 
@@ -49,16 +53,17 @@ public class GvProductAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.gv_product, null);
             convertView.setTag(new GvProductAdapter.ViewHolder(convertView));
         }
-        initializeViews((GvProduct)getItem(position), (GvProductAdapter.ViewHolder) convertView.getTag());
+        initializeViews((Commodity.CommodityBean)getItem(position), (GvProductAdapter.ViewHolder) convertView.getTag());
         return convertView;
     }
 
-    private void initializeViews(GvProduct object, GvProductAdapter.ViewHolder holder) {
-        holder.gvImgPro.setImageResource(object.getGvImgPro());
-        holder.gvImgProName.setText(object.getGvImgProName());
-        holder.gvProPre.setText(object.getGvProPre());
-        holder.gvProNewPrice.setText(object.getGvProNewPrice()+"");
-        holder.gvProOldPrice.setText(object.getGvProOldPrice()+"");
+
+    private void initializeViews(Commodity.CommodityBean object, GvProductAdapter.ViewHolder holder) {
+        ImageLoader.getInstance().displayImage(object.getImage(),holder.gvImgPro);
+        holder.gvImgProName.setText(object.getTitle());
+        holder.gvProPre.setText(object.getSellPoint());
+        holder.gvProNewPrice.setText("¥"+(object.getPrice()-11111));
+        holder.gvProOldPrice.setText("¥"+object.getPrice());
         holder.gvProOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
     }
 
@@ -76,7 +81,7 @@ public class GvProductAdapter extends BaseAdapter {
             gvImgProName = (TextView) view.findViewById(R.id.gv_pro_name);
             gvProPre = view.findViewById(R.id.gv_pro_pre);
             gvProNewPrice = view.findViewById(R.id.gv_pro_new_price);
-            gvProOldPrice = view.findViewById(R.id.gv_pro_new_price);
+            gvProOldPrice = view.findViewById(R.id.gv_pro_old_price);
             btnGo = view.findViewById(R.id.btn_go);
 
         }

@@ -1,14 +1,14 @@
 package com.example.shop.enrty;
 
 public class GvProduct {
-    int gvImgPro;
+    String gvImgPro;
     String gvImgProName;
     String gvProPre;
     int gvProNewPrice;
     int gvProOldPrice;
     int btnGo;
 
-    public GvProduct(int gvImgPro, String gvImgProName, String gvProPre, int gvProNewPrice, int gvProOldPrice) {
+    public GvProduct(String gvImgPro, String gvImgProName, String gvProPre, int gvProNewPrice, int gvProOldPrice) {
         this.gvImgPro = gvImgPro;
         this.gvImgProName = gvImgProName;
         this.gvProPre = gvProPre;
@@ -16,7 +16,7 @@ public class GvProduct {
         this.gvProOldPrice = gvProOldPrice;
     }
 
-    public GvProduct(int gvImgPro, String gvImgProName, String gvProPre, int gvProNewPrice, int gvProOldPrice, int btnGo) {
+    public GvProduct(String gvImgPro, String gvImgProName, String gvProPre, int gvProNewPrice, int gvProOldPrice, int btnGo) {
         this.gvImgPro = gvImgPro;
         this.gvImgProName = gvImgProName;
         this.gvProPre = gvProPre;
@@ -25,11 +25,11 @@ public class GvProduct {
         this.btnGo = btnGo;
     }
 
-    public int getGvImgPro() {
+    public String getGvImgPro() {
         return gvImgPro;
     }
 
-    public void setGvImgPro(int gvImgPro) {
+    public void setGvImgPro(String gvImgPro) {
         this.gvImgPro = gvImgPro;
     }
 
