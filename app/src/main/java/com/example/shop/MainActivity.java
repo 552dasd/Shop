@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 
 import android.view.MenuItem;
+import android.view.View;
 
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends SupportActivity {
     MeFragment meFragment;
     CarFragment carFragment;
     MessageFragment messageFragment;
-
+    BottomNavigationView bottomNavigationView;
     /**
      * 底部导航栏点击事件
      */
@@ -53,7 +54,7 @@ public class MainActivity extends SupportActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        bottomNavigationView = findViewById(R.id.nav_view);
         init();
 
     }

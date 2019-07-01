@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.shop.MainActivity;
 import com.example.shop.MyApplication;
 import com.example.shop.MyImageLoader;
 import com.example.shop.R;
@@ -322,7 +323,11 @@ public class HomeFragment extends SupportFragment {
         @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
         public void onMessageEvent(Integer id) {
             int Id = id;
+
             start(new ProductDetailFragment());
+            MainActivity mainActivity = new MainActivity();
+
+
 
         }
         @Override

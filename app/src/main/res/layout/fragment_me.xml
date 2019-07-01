@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="1dp"
         android:background="#fff">
         <com.example.shop.enrty.NoScroller
             android:id="@+id/me_gv"
@@ -110,12 +110,17 @@
             android:layout_marginTop="5dp"
             android:numColumns="4" />
     </LinearLayout>
-    <com.example.shop.enrty.MyRecycelView
-        android:id="@+id/my_recycel_view"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#E9E7E7"/>
+    <com.example.shop.enrty.MyListView
+        android:layout_marginBottom="50dp"
+        android:id="@+id/lv_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.example.shop.enrty.MyRecycelView>
+    </com.example.shop.enrty.MyListView>
 </LinearLayout>
 
 

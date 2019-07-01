@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Shop</string>
     <string name="title_home">首页</string>
-    <string name="title_message">消息</string>
+    <string name="title_classify">分类</string>
     <string name="title_me">我的</string>
     <string name="title_car">购物车</string>
 

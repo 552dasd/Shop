@@ -12,7 +12,7 @@ import retrofit2.http.GET;
  * 用户查询ApiService
  */
 public interface ProductApiService {
-    public static final String BASE_URL = "http://nanhai655.cn:666/";
+    public static final String BASE_URL = "http://nanhai655.cn:8080/";
     //http://nanhai655.cn:8080/shop/init
     /**
      * 查询所有商品

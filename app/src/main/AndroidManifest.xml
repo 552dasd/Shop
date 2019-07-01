@@ -32,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="2af5a47c0a2ac" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="4c9aec98882ead5ac29c824987539fcb" />
     </application>
 
 </manifest>

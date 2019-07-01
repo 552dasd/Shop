@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:paddingBottom="59dp">
+    android:orientation="vertical">
 
     <include layout="@layout/car_titlebar"></include>
 
