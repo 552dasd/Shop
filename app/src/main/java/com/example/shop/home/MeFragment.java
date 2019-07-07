@@ -2,18 +2,17 @@ package com.example.shop.home;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.TestLooperManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.shop.R;
@@ -45,6 +44,7 @@ public class MeFragment extends SupportFragment {
     MyListView myListView ;
     TextView me_nike;
     ImageView me_head;
+    LinearLayout chart;
     public MeFragment() {
         // Required empty public constructor
     }
@@ -96,6 +96,7 @@ public class MeFragment extends SupportFragment {
         noScroller = view.findViewById(R.id.me_gv);
         me_nike = view.findViewById(R.id.me_nike);
         me_head = view.findViewById(R.id.me_head);
+        chart = view.findViewById(R.id.chart);
     }
 
     public void initListener(){
@@ -110,6 +111,13 @@ public class MeFragment extends SupportFragment {
             @Override
             public void onClick(View view) {
                 start(new LoginByPhoneFragment());
+            }
+        });
+
+        chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start(new ChartFragment());
             }
         });
     }

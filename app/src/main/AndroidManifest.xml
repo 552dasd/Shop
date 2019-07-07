@@ -31,7 +31,6 @@
             android:exported="true" />
 
         <activity android:name=".product.ShopActivity" />
-        <activity android:name=".product.ChartActivity" />
         <activity android:name=".product.ProductDetailActivity" />
         <activity
             android:name=".MainActivity"

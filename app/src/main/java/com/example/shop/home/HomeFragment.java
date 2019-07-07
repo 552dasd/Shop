@@ -455,7 +455,7 @@ public class HomeFragment extends SupportFragment {
 
         Intent intent = new Intent(HomeFragment.this.getActivity(), ProductDetailActivity.class);
         startActivity(intent);
-        Toast.makeText(getContext(),""+Id,Toast.LENGTH_LONG).show();
+
          Context ctx = HomeFragment.this.getActivity();
          SharedPreferences sp = ctx.getSharedPreferences("SP",MODE_PRIVATE);
                                         //存入数据

@@ -51,7 +51,6 @@ public class HorizontalAdapteer extends RecyclerView.Adapter<HorizontalAdapteer.
 
 
         holder.gvProNewPrice.setText("¥"+(flashBean.getMoney()-100));
-        Log.e("222222", "HorizontalAdapteer: "+flashBean.getMoney());
         holder.gvProOldPrice.setText("¥"+flashBean.getMoney());
         holder.gvProOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
 
