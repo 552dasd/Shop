@@ -2,26 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shop">
-
-    <!--网络权限-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-
-
-
-    <application android:allowBackup="true"
+    <application
         android:name=".MyApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Imag"></activity>
+        <activity android:name=".My" />
+
+        <service
+            android:name=".receiver.MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".product.ShopActivity" />
+        <activity android:name=".product.ChartActivity" />
+        <activity android:name=".product.ProductDetailActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -32,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="Mob-AppKey"
             android:value="2af5a47c0a2ac" />

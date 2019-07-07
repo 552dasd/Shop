@@ -1,6 +1,8 @@
 package com.example.shop.home;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,8 @@ import com.mob.MobSDK;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import me.yokeyword.fragmentation.SupportFragment;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,7 +117,15 @@ public class LoginByPhoneFragment extends SupportFragment {
                         if (result == SMSSDK.RESULT_COMPLETE) {
                             // TODO 处理验证码验证通过的结果
                             Toast.makeText(LoginByPhoneFragment.this.getActivity(),"验证成功",Toast.LENGTH_LONG).show();
-                            start(new HomeFragment());
+                           String phone =  et_my_phone.getText().toString();
+                            Context ctx = view.getContext();
+                            SharedPreferences sp = ctx.getSharedPreferences("SP",MODE_PRIVATE);
+                            //存入数据
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("STRING_KEY3", phone);
+                            editor.commit();
+                            start(new MeFragment());
+
                         } else {
                             // TODO 处理错误的结果
                             ((Throwable) data).printStackTrace();

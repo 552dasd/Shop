@@ -56,6 +56,7 @@ public class MyProductAdapter extends RecyclerView.Adapter<MyProductAdapter.View
     public MyProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gv_product,parent,false);
 
+
         MyProductAdapter.ViewHolder holder = new MyProductAdapter.ViewHolder(view);
         return holder;
     }
@@ -75,7 +76,6 @@ public class MyProductAdapter extends RecyclerView.Adapter<MyProductAdapter.View
             @Override
             public void onClick(View v) {
 
-                Log.e("tag", "onClick: "+productItem.getId() );
                 Commodity.CommodityBean commodityBean = objects.get(position);
                 EventBus.getDefault().post(productItem.getId());
             }
@@ -86,6 +86,7 @@ public class MyProductAdapter extends RecyclerView.Adapter<MyProductAdapter.View
     @Override
     public int getItemCount() {
         return objects.size();
+
     }
 
 

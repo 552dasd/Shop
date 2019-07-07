@@ -19,9 +19,10 @@
         <ImageView
             android:id="@+id/iv_image"
             android:layout_marginLeft="11dp"
-            android:background="#000"
-            android:layout_width="79dp"
-            android:layout_height="79dp" />
+            android:background="#FFF"
+
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -30,6 +31,9 @@
         android:orientation="vertical">
 
         <TextView
+            android:maxEms="10"
+             android:ellipsize="end"
+            android:singleLine="true"
             android:id="@+id/tv_name"
             android:text="product_name"
             android:layout_width="wrap_content"

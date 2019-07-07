@@ -2,45 +2,53 @@ package com.example.shop.home;
 
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.HorizontalScrollView;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shop.MainActivity;
 import com.example.shop.MyApplication;
 import com.example.shop.MyImageLoader;
 import com.example.shop.R;
 import com.example.shop.adapter.GvItemAdapter;
-import com.example.shop.adapter.GvProductAdapter;
+import com.example.shop.adapter.HorizontalAdapteer;
 import com.example.shop.adapter.MyProductAdapter;
-import com.example.shop.adapter.MyRecyclerViewAdapter;
 import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.apiserver.ProductApiService;
+import com.example.shop.enrty.AllFlash;
 import com.example.shop.enrty.Commodity;
 import com.example.shop.enrty.GvItem;
 import com.example.shop.enrty.GvProduct;
 import com.example.shop.enrty.Init;
-import com.example.shop.enrty.Item;
+import com.example.shop.enrty.Initcountdown;
 import com.example.shop.enrty.NoScroller;
 import com.example.shop.enrty.ProductItem;
 import com.example.shop.enrty.Time;
-import com.example.shop.product.ProductDetailFragment;
+import com.example.shop.product.ProductDetailActivity;
+import com.example.shop.receiver.MyReceiver;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -53,10 +61,14 @@ import com.youth.banner.Transformer;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import retrofit2.Call;
@@ -64,6 +76,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 
 
@@ -79,11 +96,14 @@ public class HomeFragment extends SupportFragment {
     Banner mBanner;
     List<GvItem> objects = new ArrayList<>();
     List<ProductItem> productItems = new ArrayList<>();
-    List<GvProduct> gvProducts = new ArrayList<>();
+
     MarqueeView marqueeView;
-    RecyclerView recyclerView;
-    RecyclerView recyclerViewProduct;
+    RecyclerView recyclerView,recyclerViewProduct;
     ImageView imageView1,imageView2,imageView3;
+    TextView time;
+    SearchView searchView;
+    private View view;
+     String name = "";
 
     private ArrayList<String> imagePath = new ArrayList<>();
     private ArrayList<String> imageTitle= new ArrayList<>();
@@ -92,9 +112,27 @@ public class HomeFragment extends SupportFragment {
         // Required empty public constructor
     }
 
-    /**
-     * 查询所有商品
-     */
+    //子线程运行
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    //结束刷新动作
+                    queryInit();
+                    queryInitTime();
+                    queryAllCommodity();
+                    queryAllFlash();
+
+                    //更新adapter
+
+                    break;
+            }
+        }
+    };
+
+
+    //轮播
     public void queryInit() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ProductApiService.BASE_URL)
@@ -135,8 +173,7 @@ public class HomeFragment extends SupportFragment {
                 ImageLoader.getInstance().displayImage(i.getList().get(0).getBigImage1(), imageView1, MyApplication.getLoaderOptions());
                 ImageLoader.getInstance().displayImage(i.getList().get(0).getBigImage2(), imageView2, MyApplication.getLoaderOptions());
                 ImageLoader.getInstance().displayImage(i.getList().get(0).getBigImage3(), imageView3, MyApplication.getLoaderOptions());
-                Log.e("value", "onResponse: "+ i.getList().get(0).getBigImage1() );
-                Toast.makeText(getContext(), "成功", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -147,7 +184,7 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
-
+    //水平
     public void queryInitTime() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ProductApiService.BASE_URL)
@@ -164,22 +201,10 @@ public class HomeFragment extends SupportFragment {
 
                 //秒杀
                 Time i = response.body();
-
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg1(),i.getFlash().get(0).getMoney1()-100,i.getFlash().get(0).getMoney1()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg2(),i.getFlash().get(0).getMoney2()-100,i.getFlash().get(0).getMoney2()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg3(),i.getFlash().get(0).getMoney3()-100,i.getFlash().get(0).getMoney3()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg4(),i.getFlash().get(0).getMoney4()-100,i.getFlash().get(0).getMoney4()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg5(),i.getFlash().get(0).getMoney5()-100,i.getFlash().get(0).getMoney5()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg6(),i.getFlash().get(0).getMoney6()-100,i.getFlash().get(0).getMoney6()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg7(),i.getFlash().get(0).getMoney7()-100,i.getFlash().get(0).getMoney7()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImg8(),i.getFlash().get(0).getMoney8()-100,i.getFlash().get(0).getMoney8()));
-                productItems.add(new ProductItem(i.getFlash().get(0).getImh9(),i.getFlash().get(0).getMoney9()-100,i.getFlash().get(0).getMoney9()));
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 ((LinearLayoutManager) layoutManager).setOrientation(LinearLayout.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(new ProductAdapter(getContext(),productItems));
-
-                Toast.makeText(getContext(), "成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -190,6 +215,7 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
+    //瀑布流所有商品
     public void queryAllCommodity() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ProductApiService.BASE_URL)
@@ -220,36 +246,128 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
+    //模糊搜索
+    public void queryShop(String name) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ProductApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //商品
+        ProductApiService productApiService = retrofit.create(ProductApiService.class);
+
+        Call<Commodity> itemCall = productApiService.queryShop(name);
+
+        itemCall.enqueue(new Callback<Commodity>() {
+            @Override
+            public void onResponse(Call<Commodity> call, Response<Commodity> response) {
+
+                //商品
+                Commodity i = response.body();
+
+                recyclerViewProduct.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+                MyProductAdapter my=new MyProductAdapter(getContext(),i.getCommodity());
+
+                recyclerViewProduct.setAdapter(my);
+
+            }
+
+            @Override
+            public void onFailure(Call<Commodity> call, Throwable t) {
+                Toast.makeText(getContext(), "失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //水平布局商品
+    public void queryAllFlash() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ProductApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //商品
+        ProductApiService productApiService = retrofit.create(ProductApiService.class);
+
+        Call<AllFlash> itemCall = productApiService.allFlash();
+
+        itemCall.enqueue(new Callback<AllFlash>() {
+            @Override
+            public void onResponse(Call<AllFlash> call, Response<AllFlash> response) {
+
+                //商品
+                AllFlash i = response.body();
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.HORIZONTAL);
+                HorizontalAdapteer my=new HorizontalAdapteer(getContext(),i.getFlash());
+                recyclerView.setAdapter(my);
+            }
+
+            @Override
+            public void onFailure(Call<AllFlash> call, Throwable t) {
+                Toast.makeText(getContext(), "失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    //秒杀倒计时
+    public void queryTime() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ProductApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        //商品
+        ProductApiService productApiService = retrofit.create(ProductApiService.class);
+
+        Call<Initcountdown> itemCall = productApiService.time();
+
+        itemCall.enqueue(new Callback<Initcountdown>() {
+            @Override
+            public void onResponse(Call<Initcountdown> call, Response<Initcountdown> response) {
+                Initcountdown i = response.body();
+                time.setText(i.getList().get(0).getTime());
+            }
+
+            @Override
+            public void onFailure(Call<Initcountdown> call, Throwable t) {
+                Toast.makeText(getContext(), "失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        refreshableView = view.findViewById(R.id.refresh);
-        mBanner = view.findViewById(R.id.banner);
-        marqueeView = view.findViewById(R.id.marqueeView);
-        recyclerView =view.findViewById(R.id.recycler_view);
-        scrollView = view.findViewById(R.id.scroll);
-        imageView1 = view.findViewById(R.id.img_shop_1);
-        imageView2 = view.findViewById(R.id.img_shop_2);
-        imageView3 = view.findViewById(R.id.img_shop_3);
-        gv = view.findViewById(R.id.gv);
-        recyclerViewProduct = view.findViewById(R.id.gv_product);
-
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        initData();
         refreshableView.setType(SpringView.Type.FOLLOW);
         refreshableView.setHeader(new DefaultHeader(getContext()));
         refreshableView.setFooter(new DefaultFooter(getContext()));
-
+        handler.sendEmptyMessageDelayed(0,1000);
         EventBus.getDefault().register(this);
-        initData();
-        queryInit();
-        queryInitTime();
-        queryAllCommodity();
-
-
+        Runnable runnable = new Runnable() {
+            public void run() {
+                queryTime();
+            }
+        };
+        ScheduledExecutorService service = Executors
+                .newSingleThreadScheduledExecutor();
+        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
+        service.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
         gv.setAdapter(new GvItemAdapter(getContext(),objects));
-
-
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+              return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                name = newText;
+                queryShop(name);
+                return false;
+            }
+        });
         refreshableView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -263,7 +381,6 @@ public class HomeFragment extends SupportFragment {
                     }
                 }, 2000);
             }
-
             @Override
             public void onLoadmore() {
                 new Handler().postDelayed(new Runnable() {
@@ -277,6 +394,7 @@ public class HomeFragment extends SupportFragment {
         return view;
     }
 
+    //九宫格布局,实例化控件
     public void initData() {
         objects.add(new GvItem(R.drawable.news,"新品发布"));
         objects.add(new GvItem(R.drawable.mutli,"众筹"));
@@ -288,11 +406,23 @@ public class HomeFragment extends SupportFragment {
         objects.add(new GvItem(R.drawable.hot_sell,"电视热卖"));
         objects.add(new GvItem(R.drawable.electric,"家电热卖"));
         objects.add(new GvItem(R.drawable.card,"优惠卡"));
+
+        refreshableView = view.findViewById(R.id.refresh);
+        mBanner = view.findViewById(R.id.banner);
+        marqueeView = view.findViewById(R.id.marqueeView);
+        recyclerView =view.findViewById(R.id.recycler_view);
+        scrollView = view.findViewById(R.id.scroll);
+        imageView1 = view.findViewById(R.id.img_shop_1);
+        imageView2 = view.findViewById(R.id.img_shop_2);
+        imageView3 = view.findViewById(R.id.img_shop_3);
+        gv = view.findViewById(R.id.gv);
+        time = view.findViewById(R.id.time);
+        searchView = view.findViewById(R.id.search_view);
+        recyclerViewProduct = view.findViewById(R.id.gv_product);
     }
 
+    //banner轮播设置
     private void initView() {
-
-        Log.d("TAG", "onResponse: "+imagePath);
         mMyImageLoader = new MyImageLoader();
         //设置样式，里面有很多种样式可以自己都看看效果
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
@@ -315,32 +445,30 @@ public class HomeFragment extends SupportFragment {
                 .start();
     }
 
-
     /**
      * 跳转
      * @param id
      */
-        @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-        public void onMessageEvent(Integer id) {
-            int Id = id;
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onMessageEvent(Integer id) {
+        int Id = id;
 
-            start(new ProductDetailFragment());
-            MainActivity mainActivity = new MainActivity();
-
-
-
-        }
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            // 注销订阅者
-            EventBus.getDefault().unregister(this);
-        }
-
-
-
-
-
+        Intent intent = new Intent(HomeFragment.this.getActivity(), ProductDetailActivity.class);
+        startActivity(intent);
+        Toast.makeText(getContext(),""+Id,Toast.LENGTH_LONG).show();
+         Context ctx = HomeFragment.this.getActivity();
+         SharedPreferences sp = ctx.getSharedPreferences("SP",MODE_PRIVATE);
+                                        //存入数据
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("STRING_KEY", Id);
+        editor.commit();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 注销订阅者
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public void onStart() {
@@ -353,8 +481,6 @@ public class HomeFragment extends SupportFragment {
         super.onStop();
         marqueeView.stopFlipping();
     }
-
-
 
 }
 

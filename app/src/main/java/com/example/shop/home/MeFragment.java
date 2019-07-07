@@ -1,6 +1,8 @@
 package com.example.shop.home;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.yokeyword.fragmentation.SupportFragment;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -59,6 +63,12 @@ public class MeFragment extends SupportFragment {
         noScroller.setAdapter(new MeGvItemAdapter(getContext(),secondList));
         myListView = view.findViewById(R.id.lv_me);
         myListView.setAdapter(new AdapterMeAdapter(getContext(),sList));
+        //收id
+        Context ctx = getContext();
+        SharedPreferences sp = ctx.getSharedPreferences("SP", MODE_PRIVATE);
+        String name = sp.getString("STRING_KEY3", "用户名");
+        me_nike.setText(name);
+        onResume();
         return view;
     }
 
@@ -103,4 +113,11 @@ public class MeFragment extends SupportFragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
 }
