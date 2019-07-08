@@ -2,6 +2,55 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shop">
+
+    <!--&lt;!&ndash; SDK2.1新增获取用户位置信息 &ndash;&gt;
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    &lt;!&ndash; SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? &ndash;&gt;
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    &lt;!&ndash; 这个权限用于进行网络定位&ndash;&gt;
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    &lt;!&ndash; 这个权限用于访问GPS定位&ndash;&gt;
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    &lt;!&ndash; 用于访问wifi网络信息，wifi信息会用于进行网络定位&ndash;&gt;
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    &lt;!&ndash; 获取运营商信息，用于支持提供运营商信息相关的接口&ndash;&gt;
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    &lt;!&ndash; 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位&ndash;&gt;
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    &lt;!&ndash; 用于读取手机当前的状态&ndash;&gt;
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    &lt;!&ndash; 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据&ndash;&gt;
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    &lt;!&ndash; 访问网络，网络定位需要上网&ndash;&gt;
+    <uses-permission android:name="android.permission.INTERNET" />
+    &lt;!&ndash; SD卡读取权限，用户写入离线定位数据&ndash;&gt;
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions"></uses-permission>
+    &lt;!&ndash;允许应用读取低级别的系统日志文件 &ndash;&gt;
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions"></uses-permission>
+    &lt;!&ndash; 定位所需的权限 &ndash;&gt;
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    &lt;!&ndash;对于很高的分辨率，除采用相应的图片外，还需要加上如下配置，来更好的适配屏幕 &ndash;&gt;
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />-->
+
+
+
+
+
+
+
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
